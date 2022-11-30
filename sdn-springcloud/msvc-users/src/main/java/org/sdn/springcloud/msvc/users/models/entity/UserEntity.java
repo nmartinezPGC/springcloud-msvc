@@ -2,12 +2,20 @@ package org.sdn.springcloud.msvc.users.models.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.util.UUID;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "tbl_users")
-public class UserEntity {
+public class UserEntity extends AuditEntity {
     /*@Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -18,93 +26,39 @@ public class UserEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column( name = "user_identification", unique = true)
+    @Column(name = "code", columnDefinition = "uuid default gen_random_uuid()")
+    private UUID code = UUID.randomUUID();
+
+    @NotBlank
+    @Column(name = "user_identification", unique = true, length = 150)
     @NotEmpty
     private String userIdentification;
 
-    @Column( name = "full_user_name")
+    @Column(name = "full_user_name", length = 150)
     private String fullUserName;
 
-    @Column( name = "user_address")
+    @Column(name = "user_address", length = 250)
     private String userAddress;
 
-    @Column( name = "is_enabled")
+    @Column(name = "phone_number", columnDefinition = "integer default 0")
+    private int phoneNumber = 0;
+
+    @Column(name = "is_enabled")
     private Boolean isEnabled = true;
 
-    @Column( name = "email", unique = true)
+    @NotNull
+    @Column(name = "email", unique = true, length = 180)
     @NotEmpty
     @Email
     private String email;
 
-    @Column( name = "user_name", unique = true)
+    @NotBlank
+    @Column(name = "user_name", unique = true, length = 100)
     @NotEmpty
     private String userName;
 
-    @Column( name = "password")
+    @NotNull
+    @Column(name = "password", length = 200)
     @NotEmpty
     private String password;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserIdentification() {
-        return userIdentification;
-    }
-
-    public void setUserIdentification(String userIdentification) {
-        this.userIdentification = userIdentification;
-    }
-
-    public String getFullUserName() {
-        return fullUserName;
-    }
-
-    public void setFullUserName(String fullUserName) {
-        this.fullUserName = fullUserName;
-    }
-
-    public String getUserAddress() {
-        return userAddress;
-    }
-
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
-    }
-
-    public Boolean getEnabled() {
-        return isEnabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        isEnabled = enabled;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

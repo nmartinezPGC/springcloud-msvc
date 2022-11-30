@@ -2,6 +2,7 @@ package org.sdn.springcloud.msvc.users.controllers;
 
 import jakarta.validation.Valid;
 import org.sdn.springcloud.msvc.users.Services.UserService;
+import org.sdn.springcloud.msvc.users.dto.UserDto;
 import org.sdn.springcloud.msvc.users.models.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     @Autowired
     private UserService userService;
 
     @GetMapping("/")
-    public List<UserEntity> listAllUsers() {
+    public List<UserDto> listAllUsers() {
         return userService.findAll();
     }
 
@@ -36,10 +38,11 @@ public class UserController {
             return getMapResponseEntity(result);
         }
 
-        if (userService.existsByEmail(user.getEmail())) {
+        if (userService.existsByEmail(user.getEmail()) || userService.existsByUserName(user.getUserName()) ||
+                userService.existsByUserIdentification(user.getUserIdentification())) {
             return ResponseEntity.badRequest().
                     body(Collections.
-                            singletonMap("msg", "Ya existe un Usuario con ese Email"));
+                            singletonMap("msg", "Ya existe un Usuario con ese Email ó Nombre ó Identificación"));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(user));
     }
