@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="msvc-users" />
+        <module name="msvc-structure" />
         <module name="msvc-auth" />
       </profile>
     </annotationProcessing>
@@ -15,6 +16,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="msvc-auth" options="-parameters" />
+      <module name="msvc-structure" options="-parameters" />
       <module name="msvc-users" options="-parameters" />
     </option>
   </component>

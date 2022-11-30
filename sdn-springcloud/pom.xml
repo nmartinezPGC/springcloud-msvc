@@ -19,6 +19,7 @@
     <modules>
         <module>msvc-users</module>
         <module>msvc-auth</module>
+        <module>msvc-structure</module>
     </modules>
 
     <properties>
